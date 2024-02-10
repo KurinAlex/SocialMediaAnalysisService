@@ -4,7 +4,7 @@ from pandas import DataFrame, to_datetime
 from newsapi import NewsApiClient
 from eventregistry import EventRegistry, QueryArticlesIter
 
-from Backend.Entries import DataEntry
+from Backend.entries import DataEntry
 
 
 class DataProvider:

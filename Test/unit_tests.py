@@ -6,8 +6,8 @@ from unittest.mock import patch
 from newsapi import NewsApiClient
 from eventregistry import QueryArticlesIter
 
-from Backend.Entries import DataEntry, AnalysisEntry
-from Backend.DataProviders import NewsApiDataProvider, EventRegistryDataProvider
+from Backend.entries import DataEntry, AnalysisEntry
+from Backend.data_providers import NewsApiDataProvider, EventRegistryDataProvider
 from Backend.main import get_analysis
 
 

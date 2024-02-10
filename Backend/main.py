@@ -1,23 +1,9 @@
 from textblob import TextBlob
-from datetime import date, timedelta, datetime
+from datetime import date
 from collections import Counter
-from logging import basicConfig, DEBUG
 
-from Backend.Entries import AnalysisEntry
-from Backend.ApiKeys import news_api_key, event_registry_api_key
-from Backend.DataProviders import NewsApiDataProvider, EventRegistryDataProvider, DataProvider
-
-
-default_data_providers = [
-    NewsApiDataProvider(news_api_key),
-    EventRegistryDataProvider(event_registry_api_key)
-]
-
-default_max_items_per_provider = 100
-
-
-def get_default_analysis(keyword: str, min_post_date: date) -> dict:
-    return get_analysis(keyword, min_post_date, default_data_providers, default_max_items_per_provider)
+from Backend.entries import AnalysisEntry
+from Backend.data_providers import DataProvider
 
 
 def get_analysis(
@@ -115,9 +101,3 @@ def get_analysis(
             'count': [item[1] for item in most_common_nouns],
         }
     }
-
-
-if __name__ == '__main__':
-    basicConfig(level=DEBUG)
-    data = get_default_analysis('Poland', (datetime.now() - timedelta(days=7)).date())
-    print(data)
