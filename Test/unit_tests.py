@@ -1,11 +1,15 @@
 from datetime import date
+
 from unittest import TestCase, main
 from unittest.mock import patch
+
 from newsapi import NewsApiClient
 from eventregistry import QueryArticlesIter
+
 from Backend.Entries import DataEntry, AnalysisEntry
 from Backend.DataProviders import NewsApiDataProvider, EventRegistryDataProvider
 from Backend.main import get_analysis
+
 
 newsapi_test_data = [
     {
@@ -53,14 +57,14 @@ entries_test_data = [
 ]
 
 
-class TestDataEntry(TestCase):
+class DataEntryTests(TestCase):
     def test_data_entry_creation(self):
         data_entry = DataEntry(date(2022, 1, 1), 'Test text')
         self.assertEqual(data_entry.date, date(2022, 1, 1))
         self.assertEqual(data_entry.text, 'Test text')
 
 
-class TestAnalysisEntry(TestCase):
+class AnalysisEntryTests(TestCase):
     def test_data_entry_creation(self):
         data_entry = AnalysisEntry()
         self.assertEqual(data_entry.total_count, 0)
@@ -69,7 +73,7 @@ class TestAnalysisEntry(TestCase):
         self.assertEqual(data_entry.negative_count, 0)
 
 
-class TestNewsApiDataProvider(TestCase):
+class NewsApiDataProviderTests(TestCase):
     @patch.object(NewsApiClient, 'get_everything')
     def test_load_data(self, mock_get_everything):
         # arrange
@@ -119,7 +123,7 @@ class TestNewsApiDataProvider(TestCase):
                 language='en')
 
 
-class TestEventRegistryDataProvider(TestCase):
+class EventRegistryDataProviderTests(TestCase):
     @patch.object(QueryArticlesIter, 'execQuery', return_value=eventregistry_test_data)
     def test_load_data(self, mock_exec_query):
         # arrange
@@ -141,7 +145,7 @@ class TestEventRegistryDataProvider(TestCase):
         self.assertEqual(data_entries[2].text, 'Test article 3')
 
 
-class TestMain(TestCase):
+class MainTests(TestCase):
     @patch('Backend.DataProviders.NewsApiDataProvider')
     @patch('Backend.DataProviders.EventRegistryDataProvider')
     def test_get_analysis(self, newsapi_provider_mock, eventregistry_mock):

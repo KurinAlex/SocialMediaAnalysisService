@@ -22,6 +22,7 @@ class NewsApiDataProvider(DataProvider):
             data = self.client.get_everything(q=keyword,
                                               from_param=min_published_date,
                                               page=page,
+                                              page_size=min(100, max_items - len(articles)),
                                               language='en')
 
             articles += data['articles']
