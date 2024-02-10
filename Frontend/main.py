@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkcalendar import Calendar
 import Backend.main as backend
-import matplotlib as plt
 import Frontend.graphics as graphic
 
 win = tk.Tk()

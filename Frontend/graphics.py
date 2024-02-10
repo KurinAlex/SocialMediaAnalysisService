@@ -1,8 +1,5 @@
-from datetime import datetime, timedelta
-
 import numpy as np
 import matplotlib as mpl
-import Backend.main as backend
 from matplotlib import pyplot as plt
 
 mpl.use("TkAgg")
@@ -66,3 +63,26 @@ def draw_bar_chart(keyword, data, ax=None):
         ax.set_xlabel('Nouns')
         ax.set_ylabel('Frequency')
 
+def draw_plot(keyword,data):
+
+    dates_data = data["daily"]["dates"]
+    total_count_data = data["daily"]["count"]
+    positive_data = data["daily"]["positive"]
+    negative_data = data["daily"]["negative"]
+    neutral_data = data["daily"]["neutral"]
+
+    plt.figure(figsize=(10, 6))
+
+    plt.plot(dates_data, total_count_data, label='Total Count', color='black', linestyle='-')
+    plt.plot(dates_data, positive_data, label='Positive', color='#00FF00', linestyle='--')
+    plt.plot(dates_data, negative_data, label='Negative', color='#FF4500', linestyle='-.')
+    plt.plot(dates_data, neutral_data, label='Neutral', color='#00FFFF', linestyle=':')
+
+    plt.xlabel('Date')
+    plt.ylabel('Number of Publications')
+    plt.title("Publications per Day for \"" + keyword + "\" with Sentiment Breakdown")
+    plt.xticks(rotation=45)
+    plt.grid(True)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
