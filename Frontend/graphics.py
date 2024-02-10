@@ -1,14 +1,19 @@
 import numpy as np
 import matplotlib as mpl
-from matplotlib import pyplot as plt
+import matplotlib.dates as mdates
+from matplotlib import pyplot as plt, gridspec
 
 mpl.use("TkAgg")
 
-
 def draw_graphs(keyword, data):
-    fig, axs = plt.subplots(1, 2, figsize=(14, 6))
-    draw_circle_diagram(keyword, data, ax=axs[0])
-    draw_bar_chart(keyword, data, ax=axs[1])
+    fig = plt.figure(figsize=(14, 10))
+    gs = gridspec.GridSpec(2, 2, width_ratios=[2, 1])
+    ax1 = plt.subplot(gs[:, 0])
+    ax2 = plt.subplot(gs[0, 1])
+    ax3 = plt.subplot(gs[1, 1])
+    draw_plot(keyword, data, ax=ax1)
+    draw_bar_chart(keyword, data, ax=ax2)
+    draw_circle_diagram(keyword, data, ax=ax3)
     plt.tight_layout()
     plt.show()
 
@@ -63,26 +68,24 @@ def draw_bar_chart(keyword, data, ax=None):
         ax.set_xlabel('Nouns')
         ax.set_ylabel('Frequency')
 
-def draw_plot(keyword,data):
-
+def draw_plot(keyword, data,ax):
     dates_data = data["daily"]["dates"]
     total_count_data = data["daily"]["count"]
     positive_data = data["daily"]["positive"]
     negative_data = data["daily"]["negative"]
     neutral_data = data["daily"]["neutral"]
 
-    plt.figure(figsize=(10, 6))
+    ax.plot(dates_data, total_count_data, label='Total Count', color='black', linestyle='-')
+    ax.plot(dates_data, positive_data, label='Positive', color='#00FF00', linestyle='--')
+    ax.plot(dates_data, negative_data, label='Negative', color='#FF4500', linestyle='-.')
+    ax.plot(dates_data, neutral_data, label='Neutral', color='#00FFFF', linestyle=':')
 
-    plt.plot(dates_data, total_count_data, label='Total Count', color='black', linestyle='-')
-    plt.plot(dates_data, positive_data, label='Positive', color='#00FF00', linestyle='--')
-    plt.plot(dates_data, negative_data, label='Negative', color='#FF4500', linestyle='-.')
-    plt.plot(dates_data, neutral_data, label='Neutral', color='#00FFFF', linestyle=':')
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Number of Publications')
+    ax.set_title("Publications per Day for \"" + keyword + "\" with Sentiment Breakdown")
+    ax.grid(True)
+    ax.legend()
+    plt.xticks(rotation=45)  # Поворот підписів осі x
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))  # Встановлення формату дати
 
-    plt.xlabel('Date')
-    plt.ylabel('Number of Publications')
-    plt.title("Publications per Day for \"" + keyword + "\" with Sentiment Breakdown")
-    plt.xticks(rotation=45)
-    plt.grid(True)
-    plt.legend()
     plt.tight_layout()
-    plt.show()
