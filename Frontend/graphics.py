@@ -1,74 +1,59 @@
-import numpy as np
-import matplotlib as mpl
-import matplotlib.dates as mdates
-from matplotlib import pyplot as plt, gridspec
+from matplotlib import gridspec, use
+from matplotlib.dates import DateFormatter
+from matplotlib.pyplot import Axes, get_current_fig_manager, figure
 
-mpl.use("TkAgg")
+use("TkAgg")
+
 
 def draw_graphs(keyword, data):
-    fig = plt.figure(figsize=(14, 10))
-    gs = gridspec.GridSpec(2, 2, width_ratios=[2, 1])
-    ax1 = plt.subplot(gs[:, 0])
-    ax2 = plt.subplot(gs[0, 1])
-    ax3 = plt.subplot(gs[1, 1])
-    draw_plot(keyword, data, ax=ax1)
-    draw_bar_chart(keyword, data, ax=ax2)
-    draw_circle_diagram(keyword, data, ax=ax3)
-    plt.tight_layout()
-    plt.show()
+    fig = figure(figsize=(10, 14))
 
-def draw_circle_diagram(keyword, data, ax=None):
+    gs = gridspec.GridSpec(2, 2, width_ratios=[2, 1], figure=fig)
+    ax1 = fig.add_subplot(gs[:, 0])
+    ax2 = fig.add_subplot(gs[0, 1])
+    ax3 = fig.add_subplot(gs[1, 1])
+
+    draw_plot(data, ax=ax1)
+    draw_pir_chart(data, ax=ax2)
+    draw_bar_chart(keyword, data, ax=ax3)
+
+    fig_manager = get_current_fig_manager()
+    fig_manager.set_window_title('NLP analysis')
+
+    fig.subplots_adjust(wspace=0.4, hspace=0.6)
+    fig.tight_layout()
+    fig.show()
+
+
+def draw_pir_chart(data: dict, ax: Axes) -> None:
     total_count = data["total"]["count"]
     positive_data = data["total"]["positive"]
     negative_data = data["total"]["negative"]
     neutral_data = data["total"]["neutral"]
 
+    exp = (0.1, 0.1, 0.3)
     sizes = [positive_data, negative_data, neutral_data]
     labels = ['Positive', 'Negative', 'Neutral']
-    exp = (0.1, 0.1, 0.3)
     labels_with_count = [f"{label}: {size}" for label, size in zip(labels, sizes)]
     colors = ['#00FF00', '#FF4500', '#00FFFF']
 
-    if ax is None:
-        plt.pie(sizes, labels=labels_with_count, colors=colors, autopct='%1.1f%%', explode=exp)
-        plt.title("Total count of \'" + keyword + "\' phrase during last week is " + str(total_count))
-        plt.show()
-    else:
-        ax.pie(sizes, labels=labels_with_count, colors=colors, autopct='%1.1f%%', explode=exp)
-        ax.set_title("Total count of \'" + keyword + "\' phrase during last week is " + str(total_count))
+    ax.pie(sizes, labels=labels_with_count, colors=colors, autopct='%1.1f%%', explode=exp)
+    ax.set_title(f"Total sentiment distribution of {total_count} articles")
 
 
-def draw_bar_chart(keyword, data, ax=None):
+def draw_bar_chart(keyword: str, data: dict, ax: Axes) -> None:
     nouns_data = data["top20_nouns"]["nouns"]
     count_data = data["top20_nouns"]["count"]
 
-    sorted_indices = np.argsort(count_data)[::-1]
-    sorted_nouns = [nouns_data[i] for i in sorted_indices]
-    sorted_counts = [count_data[i] for i in sorted_indices]
+    ax.bar(nouns_data, count_data, color='skyblue')
+    ax.set_xticks(range(len(nouns_data)))
+    ax.set_xticklabels(nouns_data, rotation=35, ha='right', fontsize=8)
+    ax.set_title(f'Top 20 Nouns, associated with {keyword} by frequency of mentioning')
+    ax.set_xlabel('Nouns')
+    ax.set_ylabel('Frequency')
 
-    if ax is None:
-        plt.figure(figsize=(10, 6))
-        bars = plt.bar(sorted_nouns, sorted_counts, color='skyblue')
-        plt.xticks(rotation=45, ha='right', fontsize=10)
 
-        for bar in bars:
-            yval = bar.get_height()
-            plt.text(bar.get_x() + bar.get_width() / 2, yval, round(yval, 2), va='bottom', fontsize=9)
-
-        plt.title('Top 20 Nouns of \'' + keyword + "\'")
-        plt.xlabel('Nouns')
-        plt.ylabel('Frequency')
-        plt.tight_layout()
-        plt.show()
-    else:
-        ax.bar(sorted_nouns, sorted_counts, color='skyblue')
-        ax.set_xticks(range(len(sorted_nouns)))
-        ax.set_xticklabels(sorted_nouns, rotation=45, ha='right', fontsize=10)
-        ax.set_title('Top 20 Nouns of \'' + keyword + "\'")
-        ax.set_xlabel('Nouns')
-        ax.set_ylabel('Frequency')
-
-def draw_plot(keyword, data,ax):
+def draw_plot(data: dict, ax: Axes) -> None:
     dates_data = data["daily"]["dates"]
     total_count_data = data["daily"]["count"]
     positive_data = data["daily"]["positive"]
@@ -82,10 +67,8 @@ def draw_plot(keyword, data,ax):
 
     ax.set_xlabel('Date')
     ax.set_ylabel('Number of Publications')
-    ax.set_title("Publications per Day for \"" + keyword + "\" with Sentiment Breakdown")
+    ax.set_title(" Sentiment Breakdown of Daily Publications")
     ax.grid(True)
     ax.legend()
-    plt.xticks(rotation=45)  # Поворот підписів осі x
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))  # Встановлення формату дати
-
-    plt.tight_layout()
+    ax.set_xticklabels(dates_data, rotation=25, ha='right', fontsize=10)
+    ax.xaxis.set_major_formatter(DateFormatter('%d-%m-%Y'))
