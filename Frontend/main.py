@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkcalendar import Calendar
 import Backend.main as backend
-import Frontend.graphic as graphic
+import matplotlib as plt
+import Frontend.graphics as graphic
 
 win = tk.Tk()
 
@@ -22,12 +23,10 @@ entry_text.set("#socialmedia")
 calendar = Calendar(win, selectmode='day', year=2024, month=2, day=10)
 def anilize():
     data = backend.get_default_analysis(entry_text.get(), calendar.selection_get())
-    graphic.draw_circle_diagram(entry_text.get(),data)
-
+    graphic.draw_graphs(entry_text.get(), data)
 
 get_keyword_entry = tk.Entry(win, width=20, font=('Arial', 16), textvariable=entry_text)
 analise_button = tk.Button(win,width=10, text="Analise", padx=20 , pady = 10, command=anilize)
-
 
 win.config(background="#E0FFFF")
 win.title("Social media analysis service")
