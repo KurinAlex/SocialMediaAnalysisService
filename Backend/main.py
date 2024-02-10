@@ -70,5 +70,5 @@ def get_analysis(keyword: str,
 
 if __name__ == '__main__':
     basicConfig(level=DEBUG)
-    data = get_default_analysis('Ukraine', (datetime.now() - timedelta(days=7)).date())
+    data = get_default_analysis('Poland', (datetime.now() - timedelta(days=7)).date())
     print(data)
