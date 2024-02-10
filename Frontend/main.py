@@ -1,6 +1,7 @@
 import tkinter as tk
-
 from tkcalendar import Calendar
+import Backend.main as backend
+import Frontend.graphic as graphic
 
 win = tk.Tk()
 
@@ -18,9 +19,15 @@ choose_your_date_here_label = tk.Label(win, text="Choose date here:",
 entry_text = tk.StringVar()
 entry_text.set("#socialmedia")
 
-get_keyword_entry = tk.Entry(win, width=20, font=('Arial', 16), textvariable=entry_text)
-analise_button = tk.Button(win,width=10, text="Analise", padx=20 , pady = 10)
 calendar = Calendar(win, selectmode='day', year=2024, month=2, day=10)
+def anilize():
+    data = backend.get_default_analysis(entry_text.get(), calendar.selection_get())
+    graphic.draw_circle_diagram(data)
+
+
+get_keyword_entry = tk.Entry(win, width=20, font=('Arial', 16), textvariable=entry_text)
+analise_button = tk.Button(win,width=10, text="Analise", padx=20 , pady = 10, command=anilize)
+
 
 win.config(background="#E0FFFF")
 win.title("Social media analysis service")

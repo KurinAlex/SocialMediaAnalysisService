@@ -1,7 +1,7 @@
 from textblob import TextBlob
 from datetime import date, timedelta, datetime
-from Entries import AnalysisEntry
-from DataProviders import NewsApiDataProvider, EventRegistryDataProvider, DataProvider
+from Backend.Entries import AnalysisEntry
+from Backend.DataProviders import NewsApiDataProvider, EventRegistryDataProvider, DataProvider
 from collections import Counter
 from logging import basicConfig, DEBUG
 
