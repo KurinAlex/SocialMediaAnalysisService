@@ -28,7 +28,7 @@ class NewsApiDataProvider(DataProvider):
             page += 1
 
             articles_len = len(articles)
-            if len(articles) >= data['totalResults'] or len(articles) <= max_items:
+            if articles_len >= data['totalResults'] or articles_len >= max_items:
                 break
 
         df = DataFrame(articles)

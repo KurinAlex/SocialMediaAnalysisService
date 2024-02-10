@@ -49,6 +49,7 @@ def get_analysis(keyword: str,
         noun_phrases += blob.noun_phrases
 
     dates_entries = dict(sorted(dates_entries.items()))
+    most_common_nouns = Counter(noun_phrases).most_common(20)
 
     return {
         'total': {
@@ -64,7 +65,10 @@ def get_analysis(keyword: str,
             'negative': [entry.negative_count for entry in dates_entries.values()],
             'neutral': [entry.neutral_count for entry in dates_entries.values()],
         },
-        'top20_nouns': Counter(noun_phrases).most_common(20)
+        'top20_nouns': {
+            'nouns': [item[0] for item in most_common_nouns],
+            'count': [item[1] for item in most_common_nouns],
+        }
     }
 
 
