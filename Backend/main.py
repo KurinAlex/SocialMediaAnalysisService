@@ -1,14 +1,16 @@
 from textblob import TextBlob
 from datetime import date, timedelta, datetime
-from Backend.Entries import AnalysisEntry
-from Backend.DataProviders import NewsApiDataProvider, EventRegistryDataProvider, DataProvider
 from collections import Counter
 from logging import basicConfig, DEBUG
 
+from Backend.ApiKeys import news_api_key, event_registry_api_key
+from Backend.Entries import AnalysisEntry
+from Backend.DataProviders import NewsApiDataProvider, EventRegistryDataProvider, DataProvider
+
 
 default_data_providers = [
-    NewsApiDataProvider('e9e5d64799184c1cb15e53c9dc284e19'),
-    EventRegistryDataProvider('cf2085b4-29da-4055-b75f-34d23549993a')
+    NewsApiDataProvider(news_api_key),
+    EventRegistryDataProvider(event_registry_api_key)
 ]
 
 default_max_items_per_provider = 100
