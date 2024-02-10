@@ -1,8 +1,8 @@
 from datetime import date
-from pandas import DataFrame, to_datetime
 
-from newsapi import NewsApiClient
 from eventregistry import EventRegistry, QueryArticlesIter
+from newsapi import NewsApiClient
+from pandas import DataFrame, to_datetime
 
 from Backend.entries import DataEntry
 
@@ -91,7 +91,6 @@ class EventRegistryDataProvider(DataProvider):
         self.event_registry = EventRegistry(apiKey=api_key)
 
     def load_data(self, keyword: str, min_published_date: date, max_items: int) -> list[DataEntry]:
-
         # create query parameters
         q = QueryArticlesIter(keywords=keyword,
                               lang='eng',

@@ -1,9 +1,10 @@
-from textblob import TextBlob
-from datetime import date
 from collections import Counter
+from datetime import date
 
-from Backend.entries import AnalysisEntry
+from textblob import TextBlob
+
 from Backend.data_providers import DataProvider
+from Backend.entries import AnalysisEntry
 
 
 def get_analysis(
@@ -60,10 +61,10 @@ def get_analysis(
         blob = TextBlob(data_entry.text)
 
         # get text sentiment data
-        if blob.sentiment.polarity > 0:
+        if blob.sentiment.polarity > 0.3:
             entry.positive_count += 1
             total_entry.positive_count += 1
-        elif blob.sentiment.polarity < 0:
+        elif blob.sentiment.polarity < -0.3:
             entry.negative_count += 1
             total_entry.negative_count += 1
         else:

@@ -1,15 +1,13 @@
 from datetime import date
-
 from unittest import TestCase, main
 from unittest.mock import patch
 
-from newsapi import NewsApiClient
 from eventregistry import QueryArticlesIter
+from newsapi import NewsApiClient
 
-from Backend.entries import DataEntry, AnalysisEntry
 from Backend.data_providers import NewsApiDataProvider, EventRegistryDataProvider
+from Backend.entries import DataEntry, AnalysisEntry
 from Backend.main import get_analysis
-
 
 newsapi_test_data = [
     {
