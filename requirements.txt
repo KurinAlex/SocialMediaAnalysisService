@@ -1,0 +1,8 @@
+eventregistry
+parameterized
+feedgenerator
+textblob
+pandas
+tkcalendar
+matplotlib
+newsapi-python
