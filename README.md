@@ -16,7 +16,7 @@ Backend is represented as a Python module, which contains a lot of customizable 
 
 ### Entries
 
-Entries are the classes, that are used be API functions as data transfer objects.
+Entries are the classes, that are used by API functions as data transfer objects:
 
 - DataEntry represents article data, needed for NLP analysis.
 - AnalysisEntry represents NLP analysis result data for articles, published on certain date.
@@ -24,7 +24,7 @@ Entries are the classes, that are used be API functions as data transfer objects
 
 ### Data Providers
 
-Data Providers are the classes, inherited from DataProvider class, which declares two useful methods:
+Data Providers are the classes, inherited from DataProvider class, which declares two useful methods that are used for retrieving data for NLP analysis and RSS Feed accordingly:
 
 ```
 def load_data(
@@ -39,8 +39,6 @@ def load_feed(
     min_published_date: date,
     max_items: int) -> list[FeedEntry]
 ```
-
-that are used for retrieving data for NLP analysis and RSS Feed accordingly.
 
 This provides a great flexibility for user to implement their own data providers for their needs.
 
@@ -103,7 +101,7 @@ After that user can press button 'Analyze' and process of data retrieving and NL
 It may take some time (up to about 30 seconds) for program to finish analysis and show dashboard containing three plots:
 - line plot, showing trends of articles sentiment changes over the time interval.
 - bar plot, showing top 20 nouns, that were the most frequent in requested articles.
-- pir plot, showing distribution of all articles sentiment data.
+- pie plot, showing distribution of all articles sentiment data.
 
 ### Running
 
