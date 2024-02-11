@@ -74,7 +74,7 @@ class AnalysisEntryTests(TestCase):
 class FeedEntryTests(TestCase):
     def test_feed_entry_creation(self):
         feed_entry = FeedEntry('Title', 'URL', 'Description', date(2020, 1, 1))
-        self.assertEqual(feed_entry.title, 'title')
+        self.assertEqual(feed_entry.title, 'Title')
         self.assertEqual(feed_entry.url, 'URL')
         self.assertEqual(feed_entry.description, 'Description')
         self.assertEqual(feed_entry.pubdate, date(2020, 1, 1))
@@ -153,8 +153,8 @@ class EventRegistryDataProviderTests(TestCase):
 
 
 class MainTests(TestCase):
-    @patch('Backend.DataProviders.NewsApiDataProvider')
-    @patch('Backend.DataProviders.EventRegistryDataProvider')
+    @patch('Backend.data_providers.NewsApiDataProvider')
+    @patch('Backend.data_providers.EventRegistryDataProvider')
     def test_get_analysis(self, newsapi_provider_mock, eventregistry_mock):
         # arrange
         mock_newsapi_instance = newsapi_provider_mock.return_value
