@@ -42,3 +42,25 @@ class AnalysisEntry:
         self.positive_count = 0
         self.neutral_count = 0
         self.negative_count = 0
+
+
+class FeedEntry:
+    """
+    A class for RSS Feed entry data.
+
+    Attributes:
+    - title (str): Article title.
+    - link (str): Article link.
+    - description (str): Article description.
+    - pubdate (datetime.date): Article date of publishing.
+    """
+
+    def __init__(self, title: str, link: str, description: str, pubdate: date):
+        """
+        Constructor for DataEntry. Sets all attributes to 0.
+        """
+
+        self.title = title
+        self.url = link
+        self.description = description
+        self.pubdate = pubdate

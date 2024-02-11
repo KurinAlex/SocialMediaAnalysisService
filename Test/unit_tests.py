@@ -6,7 +6,7 @@ from eventregistry import QueryArticlesIter
 from newsapi import NewsApiClient
 
 from Backend.data_providers import NewsApiDataProvider, EventRegistryDataProvider
-from Backend.entries import DataEntry, AnalysisEntry
+from Backend.entries import DataEntry, AnalysisEntry, FeedEntry
 from Backend.main import get_analysis
 
 newsapi_test_data = [
@@ -69,6 +69,15 @@ class AnalysisEntryTests(TestCase):
         self.assertEqual(data_entry.positive_count, 0)
         self.assertEqual(data_entry.neutral_count, 0)
         self.assertEqual(data_entry.negative_count, 0)
+
+
+class FeedEntryTests(TestCase):
+    def test_feed_entry_creation(self):
+        feed_entry = FeedEntry('Title', 'URL', 'Description', date(2020, 1, 1))
+        self.assertEqual(feed_entry.title, 'title')
+        self.assertEqual(feed_entry.url, 'URL')
+        self.assertEqual(feed_entry.description, 'Description')
+        self.assertEqual(feed_entry.pubdate, date(2020, 1, 1))
 
 
 class NewsApiDataProviderTests(TestCase):

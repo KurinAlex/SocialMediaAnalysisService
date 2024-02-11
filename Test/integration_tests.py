@@ -3,8 +3,8 @@ from unittest import TestCase, main
 
 from parameterized import parameterized
 
+from Backend.api_keys import news_api_key, event_registry_api_key
 from Backend.data_providers import NewsApiDataProvider, EventRegistryDataProvider
-from Frontend.api_keys import news_api_key, event_registry_api_key
 
 
 class ProvidersIntegrationTests(TestCase):

@@ -3,9 +3,9 @@ from tkinter.messagebox import showerror
 
 from tkcalendar import Calendar
 
-from Backend.data_providers import EventRegistryDataProvider
+from Backend.api_keys import news_api_key, event_registry_api_key
+from Backend.data_providers import NewsApiDataProvider, EventRegistryDataProvider
 from Backend.main import get_analysis
-from Frontend.api_keys import event_registry_api_key
 from Frontend.graphics import draw_graphs
 
 # create window
@@ -40,7 +40,7 @@ def analyze():
         # set parameters
         keyword = entry_text.get()
         min_published_date = calendar.selection_get()
-        providers = [EventRegistryDataProvider(event_registry_api_key)]
+        providers = [NewsApiDataProvider(news_api_key), EventRegistryDataProvider(event_registry_api_key)]
         max_items_per_provider = 100
 
         # get analysis data
