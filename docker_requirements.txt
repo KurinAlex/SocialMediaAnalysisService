@@ -1,0 +1,5 @@
+eventregistry
+textblob
+pandas
+newsapi-python
+feedgenerator
