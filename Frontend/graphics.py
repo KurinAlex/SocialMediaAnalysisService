@@ -6,7 +6,7 @@ use("TkAgg")
 
 
 def draw_graphs(keyword, data):
-    fig = figure(figsize=(10, 14))
+    fig = figure(figsize=(10, 17))
 
     gs = gridspec.GridSpec(2, 2, width_ratios=[2, 1], figure=fig)
     ax1 = fig.add_subplot(gs[:, 0])

@@ -59,6 +59,7 @@ class NewsApiDataProvider(DataProvider):
 
         # transform articles text and date data
         df['date'] = to_datetime(df['publishedAt']).dt.date
+        df = df[df['date'] >= min_published_date]
         df['text'] = df['description'].fillna(df['content'])
         return [DataEntry(r['date'], r['text']) for _, r in df.iterrows()]
 
@@ -122,6 +123,7 @@ class EventRegistryDataProvider(DataProvider):
 
         # transform articles date data
         df['date'] = to_datetime(df['date']).dt.date
+        df = df[df['date'] >= min_published_date]
         return [DataEntry(r['date'], r['body']) for _, r in df.iterrows()]
 
     def load_feed(self, keyword: str, min_published_date: date, max_items: int) -> list[FeedEntry]:
